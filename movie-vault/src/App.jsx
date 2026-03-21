@@ -7,28 +7,25 @@ const IMG_PATH = 'https://image.tmdb.org/t/p/w500';
 
 function App() {
   const [type, setType] = useState(localStorage.getItem('vault_type') || 'movie'); 
-  const [selectedItem, setSelectedItem] = useState(JSON.parse(localStorage.getItem('vault_selected')) || null);
-  const [season, setSeason] = useState(Number(localStorage.getItem('vault_season')) || 1);
-  const [episode, setEpisode] = useState(Number(localStorage.getItem('vault_episode')) || 1);
-  
+  const [selectedItem, setSelectedItem] = useState(null); 
+  const [season, setSeason] = useState(1);
+  const [episode, setEpisode] = useState(1);
   const [content, setContent] = useState([]);
   const [details, setDetails] = useState(null);
   const [episodes, setEpisodes] = useState([]); 
   const [searchTerm, setSearchTerm] = useState('');
-  const [server, setServer] = useState('vidsrc');
+  const [server, setServer] = useState('vidlink');
+  const [isSearchActive, setIsSearchActive] = useState(false);
+
+  useEffect(() => {
+    if (selectedItem) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = 'auto';
+  }, [selectedItem]);
 
   useEffect(() => {
     localStorage.setItem('vault_type', type);
-    localStorage.setItem('vault_selected', JSON.stringify(selectedItem));
-    localStorage.setItem('vault_season', season);
-    localStorage.setItem('vault_episode', episode);
-  }, [type, selectedItem, season, episode]);
-
-  useEffect(() => {
     let url = `${BASE_URL}/${type}/popular?api_key=${API_KEY}`;
-    if (type === 'anime') {
-      url = `${BASE_URL}/discover/tv?api_key=${API_KEY}&with_genres=16&with_original_language=ja&sort_by=popularity.desc`;
-    }
+    if (type === 'anime') url = `${BASE_URL}/discover/tv?api_key=${API_KEY}&with_genres=16&with_original_language=ja&sort_by=popularity.desc`;
     fetchData(url);
   }, [type]);
 
@@ -49,54 +46,70 @@ function App() {
   }, [selectedItem, season, type]);
 
   const fetchData = (url) => {
-    fetch(url).then(res => res.json()).then(data => {
-      if (data.results) setContent(data.results);
-    });
+    fetch(url).then(res => res.json()).then(data => { if (data.results) setContent(data.results); });
   };
 
   const handleSearch = (e) => {
     e.preventDefault();
-    const searchType = type === 'anime' ? 'tv' : type;
-    const endpoint = `${BASE_URL}/search/${searchType}?api_key=${API_KEY}&query=${searchTerm}`;
-    fetchData(endpoint);
+    fetchData(`${BASE_URL}/search/${type === 'anime' ? 'tv' : type}?api_key=${API_KEY}&query=${searchTerm}`);
   };
 
-  const closePlayer = () => {
-    setSelectedItem(null);
-    setDetails(null);
-    setEpisodes([]);
+  const closePlayer = () => { setSelectedItem(null); setDetails(null); setEpisodes([]); };
+  
+  const getEmbedUrl = () => {
+    const id = selectedItem.id;
+    if (type === 'movie') {
+      if (server === 'vidsrc') return `https://vidsrc.xyz/embed/movie/${id}`;
+      if (server === '2embed') return `https://www.2embed.cc/embed/${id}`;
+      return `https://vidlink.pro/movie/${id}`;
+    }
+    if (server === 'vidsrc') return `https://vidsrc.xyz/embed/tv/${id}/${season}/${episode}`;
+    if (server === '2embed') return `https://www.2embed.cc/embedtv/${id}&s=${season}&e=${episode}`;
+    return `https://vidlink.pro/tv/${id}/${season}/${episode}`;
   };
 
   return (
     <div className="app-container">
       <header className="navbar">
-        <h1 onClick={() => window.location.reload()} style={{cursor:'pointer'}}>
-          MOVIE<span>VAULT</span>
-        </h1>
-        
-        <div className="type-toggle">
-          <button className={type === 'movie' ? 'active' : ''} onClick={() => {setType('movie'); closePlayer();}}>Movies</button>
-          <button className={type === 'tv' ? 'active' : ''} onClick={() => {setType('tv'); closePlayer();}}>Series</button>
-          <button className={type === 'anime' ? 'active' : ''} onClick={() => {setType('anime'); closePlayer();}}>Anime</button>
+        <div className="nav-left">
+          <h1 className="logo" onClick={() => window.location.reload()}>MOVIE<span>VAULT</span></h1>
+          <div className="nav-menu">
+            <button className={type === 'movie' ? 'active' : ''} onClick={() => setType('movie')}>Movies</button>
+            <button className={type === 'tv' ? 'active' : ''} onClick={() => setType('tv')}>TV Shows</button>
+            <button className={type === 'anime' ? 'active' : ''} onClick={() => setType('anime')}>Anime</button>
+          </div>
         </div>
-
-        <div className="nav-controls">
-          <form onSubmit={handleSearch}>
-            <input 
-              type="text" placeholder="Search..." 
-              value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </form>
+        
+        <div className="nav-right">
+          <div className={`stunning-search ${isSearchActive ? 'active' : ''}`}>
+            <button className="search-toggle" onClick={() => setIsSearchActive(!isSearchActive)}>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </button>
+            <form onSubmit={handleSearch}>
+              <input 
+                type="text" 
+                placeholder="Titles, genres..." 
+                value={searchTerm} 
+                onChange={(e) => setSearchTerm(e.target.value)}
+                onBlur={() => !searchTerm && setIsSearchActive(false)}
+                autoFocus={isSearchActive}
+              />
+            </form>
+          </div>
         </div>
       </header>
 
-      <main className="movie-grid">
+      <main className="content-grid">
         {content.map((item) => (
-          <div key={item.id} className="movie-card" onClick={() => {setSelectedItem(item); setSeason(1); setEpisode(1); window.scrollTo(0,0);}}>
-            <img src={item.poster_path ? IMG_PATH + item.poster_path : 'https://via.placeholder.com/500x750'} alt={item.title || item.name} />
-            <div className="movie-info">
+          <div key={item.id} className="movie-card" onClick={() => {setSelectedItem(item); setSeason(1); setEpisode(1);}}>
+            <div className="hd-tag">HD</div>
+            <img src={item.poster_path ? IMG_PATH + item.poster_path : 'https://via.placeholder.com/500x750'} alt="" />
+            <div className="card-info">
               <h3>{item.title || item.name}</h3>
-              <span>⭐ {item.vote_average?.toFixed(1)}</span>
+              <p>⭐ {item.vote_average?.toFixed(1)}</p>
             </div>
           </div>
         ))}
@@ -104,52 +117,47 @@ function App() {
 
       {selectedItem && (
         <div className="player-overlay">
-          <div className="player-content">
-            <div className={`player-header ${type !== 'movie' ? 'tv-header-spacing' : ''}`}>
-              <div className="title-group">
-                <h3>{selectedItem.title || selectedItem.name}</h3>
-                {type !== 'movie' && <span className="current-pos">S{season} : E{episode}</span>}
+          <div className="player-modal">
+            <div className="player-header-bar">
+              <button className="back-circle-btn" onClick={closePlayer}>✕</button>
+              <div className="player-meta">
+                <h2>{selectedItem.title || selectedItem.name}</h2>
+                {type !== 'movie' && <span>Season {season} Episode {episode}</span>}
               </div>
-              <div className="header-btns">
-                <select className="server-sel" value={server} onChange={(e) => setServer(e.target.value)}>
-                  <option value="vidsrc">Server 1</option>
-                  <option value="2embed">Server 2</option>
-                </select>
-                <button className="close-btn" onClick={closePlayer}>CLOSE ✕</button>
+              <div className="server-chips">
+                {['vidlink', 'vidsrc', '2embed'].map(s => (
+                  <button key={s} className={server === s ? 'active' : ''} onClick={() => setServer(s)}>
+                    {s === 'vidlink' ? 'Server 1 (4K)' : s === 'vidsrc' ? 'Server 2' : 'Server 3'}
+                  </button>
+                ))}
               </div>
             </div>
 
-            <iframe
-              src={type === 'movie' 
-                ? (server === 'vidsrc' ? `https://vidsrc.xyz/embed/movie/${selectedItem.id}` : `https://www.2embed.cc/embed/${selectedItem.id}`)
-                : (server === 'vidsrc' ? `https://vidsrc.xyz/embed/tv/${selectedItem.id}/${season}/${episode}` : `https://www.2embed.cc/embedtv/${selectedItem.id}&s=${season}&e=${episode}`)
-              }
-              frameBorder="0" allowFullScreen title="Player"
-            ></iframe>
+            <div className="video-viewport">
+               <iframe key={selectedItem.id + episode + server} src={getEmbedUrl()} frameBorder="0" allowFullScreen></iframe>
+            </div>
 
             {(type === 'tv' || type === 'anime') && details && (
-              <div className="episode-browser">
-                <div className="browser-header">
-                  <h4>Select Episode</h4>
-                  <select className="season-select" value={season} onChange={(e) => {setSeason(e.target.value); setEpisode(1);}}>
+              <div className="horizontal-selector">
+                <div className="pills-header">
+                  <h3>Browse Episodes</h3>
+                  <div className="season-pills">
                     {[...Array(details.number_of_seasons).keys()].map(n => (
-                      <option key={n+1} value={n+1}>Season {n+1}</option>
+                      <button key={n+1} className={season === n+1 ? 'active' : ''} onClick={() => {setSeason(n+1); setEpisode(1);}}>Season {n+1}</button>
                     ))}
-                  </select>
+                  </div>
                 </div>
-                <div className="episode-list">
+
+                <div className="episodes-scroller">
                   {episodes.map((ep) => (
-                    <div 
-                      key={ep.id} 
-                      className={`episode-item ${episode === ep.episode_number ? 'active' : ''}`}
-                      onClick={() => {setEpisode(ep.episode_number); window.scrollTo(0,0);}}
-                    >
-                      <div className="ep-img">
-                        <img src={ep.still_path ? IMG_PATH + ep.still_path : 'https://via.placeholder.com/300x170'} alt={ep.name} />
+                    <div key={ep.id} className={`ep-card-horizontal ${episode === ep.episode_number ? 'playing' : ''}`} onClick={() => setEpisode(ep.episode_number)}>
+                      <div className="ep-poster-hold">
+                        <img src={ep.still_path ? IMG_PATH + ep.still_path : 'https://via.placeholder.com/300x170'} alt="" />
+                        {episode === ep.episode_number && <div className="now-playing-tag">PLAYING</div>}
                       </div>
                       <div className="ep-text">
-                        <p className="ep-num">EP {ep.episode_number}</p>
-                        <p className="ep-title">{ep.name}</p>
+                        <span className="ep-label">EP {ep.episode_number}</span>
+                        <p>{ep.name}</p>
                       </div>
                     </div>
                   ))}
