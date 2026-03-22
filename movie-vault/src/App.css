@@ -79,3 +79,184 @@ body { margin: 0; background: var(--black); color: white; font-family: 'Helvetic
 .ep-poster-hold { position: relative; border-radius: 4px; overflow: hidden; }
 .ep-poster-hold img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
 .now-playing-tag { position: absolute; inset: 0; background: rgba(229, 9, 20, 0.7); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.8rem; }
+/* --- Overlay Fix --- */
+.player-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.98);
+  z-index: 5000;
+  /* This allows the modal itself to be scrolled by the mouse */
+  overflow-y: auto; 
+  -webkit-overflow-scrolling: touch;
+}
+
+.player-modal {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--black);
+}
+
+/* --- Horizontal Scroller Fix --- */
+.episodes-scroller {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding: 20px 0;
+  scroll-behavior: smooth;
+  /* Ensures mouse wheel can scroll horizontally on some browsers */
+  overscroll-behavior-x: contain; 
+}
+
+/* Custom Scrollbar for the horizontal list to make it look premium */
+.episodes-scroller::-webkit-scrollbar {
+  height: 4px;
+}
+.episodes-scroller::-webkit-scrollbar-thumb {
+  background: var(--red);
+  border-radius: 10px;
+}
+.episodes-scroller::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.1);
+}
+
+/* --- Search Bar Glow Fix --- */
+.stunning-search.active {
+  background: rgba(0, 0, 0, 0.9);
+  border: 1px solid var(--red); /* Added a red accent to match your logo */
+  box-shadow: 0 0 15px rgba(229, 9, 20, 0.3);
+  width: 260px;
+}
+/* Autoplay Toggle Styling */
+.player-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.autoplay-btn {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #888;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.autoplay-btn.on {
+  border-color: var(--red);
+  color: white;
+  background: rgba(229, 9, 20, 0.2);
+}
+
+/* Next Episode Floating Button */
+.next-ep-overlay-btn {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid white;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 100;
+  transition: 0.3s;
+  font-weight: bold;
+}
+
+.next-ep-overlay-btn:hover {
+  background: white;
+  color: black;
+}
+
+/* Ensure Iframe fills container */
+.video-viewport {
+  position: relative;
+  background: #000;
+  width: 100%;
+  height: 80vh;
+}
+
+.video-viewport iframe {
+  width: 100%;
+  height: 100%;
+}
+/* Netflix-style Autoplay Popup */
+.netflix-popup {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  animation: fadeIn 0.3s ease;
+}
+
+.popup-content {
+  text-align: center;
+  color: white;
+}
+
+.countdown-circle {
+  font-size: 3rem;
+  font-weight: bold;
+  margin: 20px auto;
+  width: 80px;
+  height: 80px;
+  border: 4px solid var(--red);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-btns {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.play-now {
+  background: white;
+  color: black;
+  border: none;
+  padding: 10px 25px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.cancel {
+  background: rgba(255,255,255,0.1);
+  color: white;
+  border: 1px solid white;
+  padding: 10px 25px;
+  cursor: pointer;
+}
+
+/* Trigger Button (Invisible until hover or placed in corner) */
+.trigger-autoplay-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(229, 9, 20, 0.6);
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.trigger-autoplay-btn:hover {
+  background: var(--red);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

@@ -17,9 +17,14 @@ function App() {
   const [server, setServer] = useState('vidlink');
   const [isSearchActive, setIsSearchActive] = useState(false);
 
+  // Scroll Lock Management
   useEffect(() => {
-    if (selectedItem) document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = 'auto';
+    if (selectedItem) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    return () => { document.body.style.overflow = 'auto'; };
   }, [selectedItem]);
 
   useEffect(() => {
@@ -91,7 +96,7 @@ function App() {
             <form onSubmit={handleSearch}>
               <input 
                 type="text" 
-                placeholder="Titles, genres..." 
+                placeholder="Search..." 
                 value={searchTerm} 
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onBlur={() => !searchTerm && setIsSearchActive(false)}
@@ -127,20 +132,28 @@ function App() {
               <div className="server-chips">
                 {['vidlink', 'vidsrc', '2embed'].map(s => (
                   <button key={s} className={server === s ? 'active' : ''} onClick={() => setServer(s)}>
-                    {s === 'vidlink' ? 'Server 1 (4K)' : s === 'vidsrc' ? 'Server 2' : 'Server 3'}
+                    {s === 'vidlink' ? 'Server 1' : s === 'vidsrc' ? 'Server 2' : 'Server 3'}
                   </button>
                 ))}
               </div>
             </div>
 
             <div className="video-viewport">
-               <iframe key={selectedItem.id + episode + server} src={getEmbedUrl()} frameBorder="0" allowFullScreen></iframe>
+               <iframe 
+                 key={selectedItem.id + episode + server} 
+                 src={getEmbedUrl()} 
+                 frameBorder="0" 
+                 allowFullScreen 
+                 title="Player"
+                 /* REFERRER POLICY: Prevents ads from tracking your site origin */
+                 referrerPolicy="origin"
+               ></iframe>
             </div>
 
             {(type === 'tv' || type === 'anime') && details && (
               <div className="horizontal-selector">
                 <div className="pills-header">
-                  <h3>Browse Episodes</h3>
+                  <h3>Episodes</h3>
                   <div className="season-pills">
                     {[...Array(details.number_of_seasons).keys()].map(n => (
                       <button key={n+1} className={season === n+1 ? 'active' : ''} onClick={() => {setSeason(n+1); setEpisode(1);}}>Season {n+1}</button>
