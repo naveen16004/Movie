@@ -62,5 +62,5 @@ Figure 4: Horizontal Episode Scroller and Season selector.
 Distributed under the MIT License.
 
 🤝 Contact
-Naveen - [Your GitHub Profile]
-Project Link: https://github.com/your-username/movie-vault
+Naveen - [Naveen16004]
+Project Link: https://github.com/naveen16004/Movie
