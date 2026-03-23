@@ -29,7 +29,7 @@ Icons: SVG / HeroIcons
 Clone the repo:
 
 Bash
-git clone https://github.com/your-username/movie.git
+git clone https://github.com/naveen16004/movie.git
 Install dependencies:
 
 Bash
