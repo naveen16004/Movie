@@ -1,19 +1,17 @@
-# 🎬 Movie Vault 
-> "A specialized search engine for the cinematic universe."
+# 🎬 Movie Vault
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white) ![TMDB API](https://img.shields.io/badge/TMDB-01d277?style=for-the-badge&logo=themoviedatabase&logoColor=white) ![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
 
-Movie Vault is a React-powered media discovery application. It aggregates data from the **TMDB API** to provide users with a seamless browsing experience, detailed movie insights, and streaming availability.
+> "Your personal gateway to the cinematic universe."
 
-### ⚙️ Functional Features
-* **TMDB Integration:** Fetches real-time data for thousands of titles.
-* **Responsive Grid:** A custom CSS layout that looks stunning on mobile and desktop.
-* **Mixed Case Mapping:** Optimized data handling for consistent UI rendering.
-* **Vault Logic:** Ability to filter and find movies based on specific genre/rating queries.
+Movie Vault is a high-performance, responsive web application built with **React** and powered by the **TMDB API**. It provides a seamless browsing experience for movie enthusiasts.
 
-### 🏗️ Architecture
-* **Framework:** React 18
-* **Styling:** CSS3 (Modern Flex/Grid)
-* **API:** The Movie Database (TMDB)
+### 🍿 Features
+* **Real-time Discovery:** Fetches the latest trending and top-rated films.
+* **Smart Search:** Instant filtering and movie lookup functionality.
+* **Responsive Grid:** Optimized for cinematic viewing on any device.
+* **Deep Details:** Full access to cast, ratings, and release schedules.
+
+### ⚙️ Tech Stack
+* **Frontend:** React 18 & Modern CSS
+* **Data Source:** The Movie Database API
 * **Deployment:** Vercel / Netlify
-
----
-*Built by Naveen. For the love of Cinema.*
