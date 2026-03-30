@@ -15,3 +15,8 @@ Movie Vault is a high-performance, responsive web application built with **React
 * **Frontend:** React 18 & Modern CSS
 * **Data Source:** The Movie Database API
 * **Deployment:** Vercel / Netlify
+
+#📜 License
+​Distributed under the MIT License.
+​#🤝 Contact
+​Naveen - Computer Science Student & Developer
