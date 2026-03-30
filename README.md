@@ -1,22 +1,44 @@
-# 🎬 Movie Vault
-![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white) ![TMDB API](https://img.shields.io/badge/TMDB-01d277?style=for-the-badge&logo=themoviedatabase&logoColor=white) ![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
+​🎬 MovieVault
+​MovieVault is a high-performance, responsive streaming web application built with React and powered by the TMDB API. This project features a seamless UI, multi-server support for movies, TV shows, and anime, and a custom-built horizontal episode scroller.
+​✨ Features
+​⚡ Real-time Search: Instantly find movies, TV shows, or anime with a glassmorphism-styled search bar.
+​📺 Multi-Server Support: Integrated with VidLink, VidSrc, and 2Embed to ensure maximum uptime.
+​📱 Optimized for Mobile: Touch-friendly navigation and custom grid layouts for smaller screens.
+​🎞️ Episode Management: Automatic season and episode fetching with a horizontal scroller.
+​🛡️ Ad-Shielding: Implemented Referrer Policies to minimize intrusive third-party redirects.
+​🎨 Stunning UI: Deep black aesthetic with red accents and high-contrast typography.
+​🛠️ Tech Stack
+​Frontend: React.js (Hooks, Functional Components)
+​Styling: CSS3 (Custom Variables, Flexbox/Grid, Media Queries)
+​API: The Movie Database (TMDB)
+​Icons: SVG / HeroIcons
+🚀 Installation & Setup
+Clone the repo : git clone https://github.com/your-username/movie-vault.git
 
-> "Your personal gateway to the cinematic universe."
+Install dependencies : npm install
 
-Movie Vault is a high-performance, responsive web application built with **React** and powered by the **TMDB API**. It provides a seamless browsing experience for movie enthusiasts.
+Add your API Key:
+Update the API_KEY constant in App.jsx with your TMDB key.
 
-### 🍿 Features
-* **Real-time Discovery:** Fetches the latest trending and top-rated films.
-* **Smart Search:** Instant filtering and movie lookup functionality.
-* **Responsive Grid:** Optimized for cinematic viewing on any device.
-* **Deep Details:** Full access to cast, ratings, and release schedules.
+Run the development server: npm start
 
-### ⚙️ Tech Stack
-* **Frontend:** React 18 & Modern CSS
-* **Data Source:** The Movie Database API
-* **Deployment:** Vercel / Netlify
+📸 Project Showcases
+Interface Overview
+The main dashboard provides quick access to trending content with standard 2:3 aspect ratio posters and ratings.
 
-#📜 License
-​Distributed under the MIT License.
-​#🤝 Contact
-​Naveen - Computer Science Student & Developer
+Figure 1: Main Dashboard (Movies View) displaying poster grid and metadata.
+Figure 2: Anime View displaying standard 2:3 poster grid and metadata.
+Video Player & Episodes
+When an item is selected, the overlay provides a cinema-focused video viewport integrated with a custom horizontal episode list.
+Figure 3: Video Viewport and metadata overlay.
+The custom horizontal scroller allows for rapid episode browsing, with the current episode highlighted by a red overlay and "PLAYING" tag.
+Figure 4: Horizontal Episode Scroller and Season selector.
+
+
+📜 License
+Distributed under the MIT License.
+
+
+🤝 Contact
+Naveen - Computer Science Student & Developer
+Project Link: https://github.com/your-username/movie-vault
