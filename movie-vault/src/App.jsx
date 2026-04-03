@@ -17,20 +17,17 @@ function App() {
   const [server, setServer] = useState('vidlink');
   const [isSearchActive, setIsSearchActive] = useState(false);
 
-  // Scroll Lock Management
   useEffect(() => {
-    if (selectedItem) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-    }
+    document.body.style.overflow = selectedItem ? 'hidden' : 'auto';
     return () => { document.body.style.overflow = 'auto'; };
   }, [selectedItem]);
 
   useEffect(() => {
     localStorage.setItem('vault_type', type);
     let url = `${BASE_URL}/${type}/popular?api_key=${API_KEY}`;
-    if (type === 'anime') url = `${BASE_URL}/discover/tv?api_key=${API_KEY}&with_genres=16&with_original_language=ja&sort_by=popularity.desc`;
+    if (type === 'anime') {
+      url = `${BASE_URL}/discover/tv?api_key=${API_KEY}&with_genres=16&with_original_language=ja&sort_by=popularity.desc`;
+    }
     fetchData(url);
   }, [type]);
 
@@ -39,11 +36,7 @@ function App() {
       fetch(`${BASE_URL}/tv/${selectedItem.id}?api_key=${API_KEY}`)
         .then(res => res.json())
         .then(data => setDetails(data));
-    }
-  }, [selectedItem, type]);
-
-  useEffect(() => {
-    if (selectedItem && (type === 'tv' || type === 'anime')) {
+      
       fetch(`${BASE_URL}/tv/${selectedItem.id}/season/${season}?api_key=${API_KEY}`)
         .then(res => res.json())
         .then(data => setEpisodes(data.episodes || []));
@@ -56,7 +49,8 @@ function App() {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    fetchData(`${BASE_URL}/search/${type === 'anime' ? 'tv' : type}?api_key=${API_KEY}&query=${searchTerm}`);
+    const searchType = type === 'anime' ? 'tv' : type;
+    fetchData(`${BASE_URL}/search/${searchType}?api_key=${API_KEY}&query=${searchTerm}`);
   };
 
   const closePlayer = () => { setSelectedItem(null); setDetails(null); setEpisodes([]); };
@@ -88,20 +82,13 @@ function App() {
         <div className="nav-right">
           <div className={`stunning-search ${isSearchActive ? 'active' : ''}`}>
             <button className="search-toggle" onClick={() => setIsSearchActive(!isSearchActive)}>
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="11" cy="11" r="8"></circle>
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
               </svg>
             </button>
             <form onSubmit={handleSearch}>
-              <input 
-                type="text" 
-                placeholder="Search..." 
-                value={searchTerm} 
-                onChange={(e) => setSearchTerm(e.target.value)}
-                onBlur={() => !searchTerm && setIsSearchActive(false)}
-                autoFocus={isSearchActive}
-              />
+              <input type="text" placeholder="Search..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} onBlur={() => !searchTerm && setIsSearchActive(false)} autoFocus={isSearchActive} />
             </form>
           </div>
         </div>
@@ -145,8 +132,8 @@ function App() {
                  frameBorder="0" 
                  allowFullScreen 
                  title="Player"
-                 /* REFERRER POLICY: Prevents ads from tracking your site origin */
                  referrerPolicy="origin"
+                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                ></iframe>
             </div>
 
@@ -160,7 +147,6 @@ function App() {
                     ))}
                   </div>
                 </div>
-
                 <div className="episodes-scroller">
                   {episodes.map((ep) => (
                     <div key={ep.id} className={`ep-card-horizontal ${episode === ep.episode_number ? 'playing' : ''}`} onClick={() => setEpisode(ep.episode_number)}>
@@ -183,5 +169,4 @@ function App() {
     </div>
   );
 }
-
 export default App;
