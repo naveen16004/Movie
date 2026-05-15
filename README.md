@@ -1,43 +1,45 @@
-​🎬 MovieVault
-​MovieVault is a high-performance, responsive streaming web application built with React and powered by the TMDB API. This project demonstrates a seamless frontend experience, featuring multi-server support for movies, TV shows, and anime, along with a custom-built horizontal episode navigation system.
-​✨ Key Features
-​⚡ Real-time Search: A glassmorphism-styled search bar that instantly filters through the TMDB database.
-​📺 Multi-Server Support: Integrated with VidLink, VidSrc, and 2Embed to ensure maximum streaming uptime.
-​📱 Mobile-First Design: Fully responsive grid layouts and touch-friendly navigation optimized for both PC and mobile browsers.
-​🎞️ Netflix-Style Navigation: A custom horizontal episode scroller with "Now Playing" indicators and automatic season fetching.
-​🛡️ Secure Integration: Implemented Referrer Policies to minimize intrusive third-party tracking from embed iframes.
-​🎨 Premium UI/UX: A deep black aesthetic with high-contrast red accents, featuring HD tags and smooth hover transitions.
-​🛠️ Tech Stack
-​Frontend: React.js (Hooks & Functional Components)
-​Styling: CSS3 (Custom Variables, Flexbox, Grid, & Media Queries)
-​Data: The Movie Database (TMDB) REST API
-​Storage: LocalStorage for persistent user preferences
-​📸 Project Showcases
-​Interface Overview
-​The main dashboard provides quick access to trending content across three primary categories: Movies, TV Shows, and Anime.
-​Main Dashboard (Movies View)
-Figure 1: Responsive poster grid and metadata.
-​Anime Discovery View
-Figure 2: Specialized view for anime titles.
-​Video Player & Episode Management
-​The player overlay is designed for a cinema-like experience, keeping the focus on the content while providing easy access to episode lists.
-​Cinematic Video Viewport
-Figure 3: Multi-server toggle and immersive player.
-​Horizontal Episode Scroller
-Figure 4: "Now Playing" highlights for easy navigation.
-​🚀 Installation & Setup
-​Clone the repository:
-git clone https://github.com/naveen16004/movie.git
-​Install dependencies:
-npm install
-​Configure API Key:
-Update the API_KEY constant in App.jsx with your unique TMDB key.
-​Launch the App:
-npm start
-​📜 License
-​This project is distributed under the MIT License.
-​🤝 Contact
-​Naveen - Computer Science Student & Developer
-Project Link: https://github.com/naveen16004/movie
+# 🎬 MovieVault
+MovieVault is a high-performance, cinematic streaming dashboard built with React and Vite. Leveraging the TMDB API, it delivers a seamless discovery experience across Movies, TV Shows, and Anime with a focus on speed, responsiveness, and a "stunning" dark-mode aesthetic.
 
-Enjoy the feast 
+# 🚀 Technical Highlights
+⚡ Lightning Fast: Powered by Vite for near-instant HMR (Hot Module Replacement) and optimized build times.
+
+📺 Multi-Server Architecture: Dynamic iframe injection supporting VidLink, VidSrc, and 2Embed to ensure 99% stream availability.
+
+🎞️ Netflix-Style UX: Custom-engineered horizontal episode scroller with "Now Playing" state management and automatic season fetching.
+
+🛡️ Security Conscious: Implemented referrerPolicy="origin" and specific allow permission headers to maintain player stability while mitigating intrusive redirects.
+
+📱 Universal UI: A fully responsive CSS Grid system that adapts flawlessly from desktop monitors to mobile touchscreens.
+
+# 🛠️ Tech Stack
+Core: React.js 18+
+
+Build Tool: Vite
+
+Data Source: TMDB (The Movie Database) API
+
+Styling: Modern CSS3 (Custom Properties, Flexbox, Grid)
+
+Icons: Hand-crafted SVG Vector Graphics
+
+# ⚙️ Installation & Setup
+Clone the Repository:
+git clone https://github.com/naveen16004/movie.git
+
+Install Dependencies:
+npm install
+
+Environment Configuration:
+Open App.jsx and update the API_KEY constant with your personal TMDB API key.
+
+Launch Development Server:
+npm run dev
+
+# 📜 License
+Distributed under the MIT License. See LICENSE for more information.
+
+# 🤝 Contact
+Naveen - Computer Science Student & Developer GitHub: naveen16004
+
+Project Link: https://github.com/naveen16004/movie
