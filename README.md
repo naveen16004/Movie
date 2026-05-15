@@ -3,8 +3,14 @@ MovieVault is a high-performance, cinematic streaming dashboard built with React
 
 # 📸 ScreenShots
 ![Movies Grid](./Screenshots/Movies.png)
+
+
 ![TV Shows Grid](./Screenshots/TV%20shows.png)
+
+
 ![EP Selector](./Screenshots/Episode%20Selector.png)
+
+
 ![Anime Grid](./Screenshots/Anime.png)
 
 # 🚀 Technical Highlights
