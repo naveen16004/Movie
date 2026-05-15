@@ -2,6 +2,10 @@
 MovieVault is a high-performance, cinematic streaming dashboard built with React and Vite. Leveraging the TMDB API, it delivers a seamless discovery experience across Movies, TV Shows, and Anime with a focus on speed, responsiveness, and a "stunning" dark-mode aesthetic.
 
 # 📸 ScreenShots
+![Movies Grid](./Screenshots/Movies.png)
+![TV Shows Grid](./Screenshots/TV%20shows.png)
+![EP Selector](./Screenshots/Episode%20Selector.png)
+![Anime Grid](./Screenshots/Anime.png)
 
 # 🚀 Technical Highlights
 ⚡ Lightning Fast: Powered by Vite for near-instant HMR (Hot Module Replacement) and optimized build times.
