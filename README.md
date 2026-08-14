@@ -40,14 +40,16 @@ Clone the Repository:
 git clone https://github.com/naveen16004/movie.git
 
 Install Dependencies:
+```
 npm install
-
+```
 Environment Configuration:
 Open App.jsx and update the API_KEY constant with your personal TMDB API key.
 
 Launch Development Server:
+```
 npm run dev
-
+```
 # 📜 License
 Distributed under the MIT License. See LICENSE for more information.
 
